@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="utf-8">
     <title>HB3D STL 3D Viewer - Impressions 3D Lille</title>
@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
 
+<body>
     <!-- Main div -->
     <div id="div" class="container">
         
@@ -76,7 +76,7 @@
                         <!-- Quantité -->
                         <div class="list-group-item">
                             <h4>📦 Quantité (kg)</h4>
-                            <input name="qty" type="number" class="form-control" min="0.1" step="0.1" value="1" placeholder="1.0">
+                            <input name="qty" type="number" class="form-control" id="qty" min="0.1" step="0.1" value="1" placeholder="1.0">
                         </div>
 
                         <!-- Couleur -->
@@ -107,7 +107,7 @@
                         <!-- Email -->
                         <div class="list-group-item list-group-item-info">
                             <h4>📧 Votre email</h4>
-                            <input name="email" type="email" class="form-control" required placeholder="contact@exemple.com">
+                            <input name="email" type="email" class="form-control" id="email" required placeholder="contact@exemple.com">
                         </div>
 
                         <!-- Bouton Devis -->
@@ -120,8 +120,7 @@
         </div>
     </div>
 
-
-        <!-- JS Libraries -->
+    <!-- JS Libraries -->
     <script src="js/jquery-1.11.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jsc3d_mod.js"></script>
@@ -129,35 +128,39 @@
     <script src="js/object_viewer.js"></script>
     <script src="js/upload_handler.js"></script>
 
-    
-<!-- 🔥 HB3D EMAILJS (CORRIGÉ) -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>
-    emailjs.init("L3Sr6smhqooUMTq7D");  // ✅ Public Key OK
+    <!-- 🔥 HB3D EMAILJS FORMULAIRE (FINAL 100%) -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        emailjs.init("L3Sr6smhqooUMTq7D");  // ✅ Ton Public Key
 
-    // UNIQUEMENT ÇA (SUPPRIME le 1er)
-    document.getElementById('form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const formData = {
-            material: document.querySelector('input[name="material"]:checked')?.value || 'Non spécifié',
-            qty: document.querySelector('input[name="qty"]').value + " kg",
-            color: document.querySelector('input[name="color"]:checked')?.value || 'Non spécifié',
-            resine: document.querySelector('input[name="resine"]:checked')?.value || 'Non spécifié',
-            email: document.querySelector('input[name="email"]').value,
-            note: document.querySelector('textarea[name="note"]').value
-        };
-        
-         emailjs.send("service_hv1zpbv", "88ulorc", formData).then(function() {
-            alert('✅ Devis HB3D envoyé ! Réponse 24h Lille');
-            document.getElementById('form').reset();
-        }, function(error) {
-            alert('❌ Erreur : ' + error.text);
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('form');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // 📊 Collecte données
+                const formData = {
+                    material: document.querySelector('input[name="material"]:checked')?.value || 'Non spécifié',
+                    qty: document.getElementById('qty').value + ' kg',
+                    color: document.querySelector('input[name="color"]:checked')?.value || 'Non spécifié',
+                    resine: document.querySelector('input[name="resine"]:checked')?.value || 'Non spécifié',
+                    note: document.querySelector('textarea[name="note"]').value || '',
+                    email: document.getElementById('email').value,
+                    from_name: 'Site HB3D Lille'
+                };
+                
+                // 🚀 Envoi EmailJS
+                emailjs.send('service_hv1zpbv', '88ulorc', formData)
+                    .then(function(response) {
+                        alert('✅ Devis HB3D envoyé ! Vérifie hakim@hb3d.fr (spam possible)');
+                        form.reset();
+                    }, function(error) {
+                        console.error('EmailJS ERROR:', error);
+                        alert('❌ Erreur envoi: ' + (error.text || JSON.stringify(error)));
+                    });
+            });
         });
-    });
-</script>
+    </script>
 </body>
 </html>
-
-
-
