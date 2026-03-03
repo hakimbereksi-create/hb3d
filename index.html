@@ -148,55 +148,37 @@
 
     <!-- ===== GITHUB API HB3D v2.0 🚀 ===== -->
  <script>
-function createGitHubIssue() {
-    const emailField = document.querySelector('input[name="email"]');
-    const qtyField = document.querySelector('input[name="email"]');
-    
-    if(!emailField || !emailField.value) {
-        alert('❌ Email obligatoire !');
-        return;
-    }
-    
-    const material = document.querySelector('input[name="material"]:checked')?.value || 'Non spécifié';
-    const qty = qtyField ? qtyField.value : '1';
-    const color = document.querySelector('input[name="color"]:checked')?.value || 'Non spécifié';
-    const finish = document.querySelector('input[name="finish"]:checked')?.value || 'Brut';
-    const note = document.querySelector('textarea[name="note"]')?.value || '';
-    const email = emailField.value;
-    
-    console.log('🚀 HB3D v2.0 → GitHub Issue', {material, qty, email});
-    
-    fetch('https://api.github.com/repos/hakimbereksi-create/hb3d/issues', {
-        method: 'POST',
-        headers: {
-            'Authorization': 'Bearer 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',  ← ✅ BEARER !
-            'Content-Type': 'application/json',
-            'Accept': 'application/vnd.github.v3+json'
-        },
-        body: JSON.stringify({
-            title: `🚀 DEVIs HB3D: ${material} - ${qty} unités`,
-            body: `👤 **Client**: ${email}\n🖨️ **Matériau**: ${material}\n🔢 **Quantité**: ${qty} unités\n\n📍 **HB3D Lille** v2.0`
-        })
-    })
-    .then(response => {
-        console.log('Status:', response.status);
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        return response.json();
-    })
-    .then(data => {
-        console.log('✅ Issue créée:', data.html_url);
-        alert(`✅ DEVIs HB3D v2.0 ENVOYÉ !\n\n📋 ${data.html_url}`);
-        document.getElementById('form')?.reset();
-    })
-    .catch(error => {
-        console.error('❌ GitHub ERROR:', error);
-        alert('❌ Erreur:\n' + error);
-    });
+function createGitHubIssue(){
+const emailField=document.querySelector('input[name="email"]');
+const qtyField=document.querySelector('input[name="qty"]');
+if(!emailField||!emailField.value){
+alert('Email obligatoire !');return;}
+const material=document.querySelector('input[name="material"]:checked')?.value||'Non spécifié';
+const qty=qtyField?qtyField.value:'1';
+const email=emailField.value;
+console.log('HB3D v2.0 GitHub',material,qty,email);
+fetch('https://api.github.com/repos/hakimbereksi-create/hb3d/issues',{
+method:'POST',
+headers:{
+'Authorization':'Bearer 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',
+'Content-Type':'application/json'},
+body:JSON.stringify({
+title:`DEVIs HB3D: ${material} - ${qty} unités`,
+body:`Client: ${email}\nMatériau: ${material}\nQuantité: ${qty} unités\n\nHB3D Lille v2.0`
+})
+}).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json()})
+.then(d=>{
+
+console.log('Issue creee:',d.html_url);
+alert('DEVIs HB3D ENVOYE !\n'+d.html_url);
+document.getElementById('form')?.reset();
+}).catch(e=>alert('Erreur: '+e));
 }
 </script>
 
 </body>
 </html>
+
 
 
 
