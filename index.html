@@ -150,7 +150,7 @@
  <script>
 function createGitHubIssue() {
     const emailField = document.querySelector('input[name="email"]');
-    const qtyField = document.querySelector('input[name="qty"]');
+    const qtyField = document.querySelector('input[name="email"]');
     
     if(!emailField || !emailField.value) {
         alert('❌ Email obligatoire !');
@@ -169,33 +169,35 @@ function createGitHubIssue() {
     fetch('https://api.github.com/repos/hakimbereksi-create/hb3d/issues', {
         method: 'POST',
         headers: {
-            'Authorization': 'token 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',
+            'Authorization': 'Bearer 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',  ← ✅ BEARER !
             'Content-Type': 'application/json',
             'Accept': 'application/vnd.github.v3+json'
         },
         body: JSON.stringify({
             title: `🚀 DEVIs HB3D: ${material} - ${qty} unités`,
-            body: `👤 **Client**: ${email}\n🖨️ **Matériau**: ${material}\n🔢 **Quantité**: ${qty} unités\n🎨 **Couleur**: ${color}\n✨ **Finition**: ${finish}\n📝 **Note**: ${note}\n\n📍 **HB3D Lille** - Devis v2.0 *03/03/2026 18h45*`
+            body: `👤 **Client**: ${email}\n🖨️ **Matériau**: ${material}\n🔢 **Quantité**: ${qty} unités\n\n📍 **HB3D Lille** v2.0`
         })
     })
     .then(response => {
+        console.log('Status:', response.status);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         return response.json();
     })
     .then(data => {
         console.log('✅ Issue créée:', data.html_url);
-        alert(`✅ DEVIs HB3D v2.0 ENVOYÉ !\n\n📋 ${data.html_url}\n\n⚡ Zapier CRM prêt !`);
+        alert(`✅ DEVIs HB3D v2.0 ENVOYÉ !\n\n📋 ${data.html_url}`);
         document.getElementById('form')?.reset();
     })
     .catch(error => {
         console.error('❌ GitHub ERROR:', error);
-        alert('❌ Erreur GitHub:\n' + error);
+        alert('❌ Erreur:\n' + error);
     });
 }
 </script>
 
 </body>
 </html>
+
 
 
 
