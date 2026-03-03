@@ -1,4 +1,4 @@
- <!doctype html>
+<!doctype html>
 <html lang="fr">
 <head>
     <meta charset="utf-8">
@@ -10,18 +10,19 @@
 <body>
     <div id="div" class="container">
         <div class="row">
+            <!-- 3D VIEWER -->
             <div class="col-md-4">
                 <div id="stlselector" class="bg-warning">
-                    <label for="file"><b>Votre fichier STL:</b></label>
-                    <input type="file" name="file" id="file"/>
+                    <label for="file"><b>📁 Votre fichier STL:</b></label>
+                    <input type="file" name="file" id="file" accept=".stl"/>
                 </div>
                 <div id="view3d">
                     <canvas id="cv" width="400" height="400"></canvas>
                     <div class="panel panel-info" id="tip">
                         <table class="table">
-                            <tr><td>Zoom</td><td><kbd>Wheel</kbd></td></tr>
-                            <tr><td>Rotate</td><td><kbd>Drag</kbd></td></tr>
-                            <tr><td>Pan</td><td><kbd>Ctrl+Drag</kbd></td></tr>
+                            <tr><td>🔍 Zoom</td><td><kbd>Wheel</kbd></td></tr>
+                            <tr><td>↻ Rotate</td><td><kbd>Drag</kbd></td></tr>
+                            <tr><td>⬅️ Pan</td><td><kbd>Ctrl+Drag</kbd></td></tr>
                         </table>
                     </div>
                     <div id="loading">
@@ -36,7 +37,7 @@
                         <td>
                             <div class="btn-group dropup pull-right">
                                 <button class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                    <span class="glyphicon glyphicon-eye-open"></span> View <span class="caret"></span>
+                                    <span class="glyphicon glyphicon-eye-open"></span> Vue <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><a href="#wireframe" class="rendermode">Wireframe</a></li>
@@ -49,52 +50,95 @@
                 </table>
             </div>
 
+            <!-- FORMULAIRE DEVIS HB3D COMPLET -->
             <div class="col-md-4">
-                <!-- FORMULAIRE DEVIS HB3D -->
                 <div class="list-group container-fluid">
                     <form id="form">
-                        <div class="list-group-item">
-                            <h4>🖨️ Matériau Plastique</h4>
-                            <label class="radio-inline"><input type="radio" name="material" value="ABS"> ABS</label>
-                            <label class="radio-inline"><input type="radio" name="material" value="PLA"> PLA</label>
-                            <label class="radio-inline"><input type="radio" name="material" value="NYLON"> NYLON</label>
-                            <label class="radio-inline"><input type="radio" name="material" value="PETG"> PETG</label>
-                            <label class="radio-inline"><input type="radio" name="material" value="Flex"> Flex</label>
+                        <!-- PLASTIQUE FDM -->
+                        <div class="list-group-item list-group-item-success">
+                            <h4>🖨️ <strong>PLASTIQUE FDM</strong></h4>
+                            <label class="radio-inline"><input type="radio" name="material" value="ABS"> 🔴 ABS</label>
+                            <label class="radio-inline"><input type="radio" name="material" value="PLA"> 🟢 PLA</label>
+                            <label class="radio-inline"><input type="radio" name="material" value="PETG"> 🔵 PETG</label>
+                            <label class="radio-inline"><input type="radio" name="material" value="NYLON"> ⚫ NYLON</label>
+                            <label class="radio-inline"><input type="radio" name="material" value="FLEX"> 🟡 FLEX TPU</label>
                         </div>
+
+                        <!-- SLA RÉSINE -->
+                        <div class="list-group-item list-group-item-info">
+                            <h4>🌊 <strong>RÉSINE SLA</strong></h4>
+                            <label class="radio-inline"><input type="radio" name="material" value="RESINE_STANDARD"> 💎 Standard</label>
+                            <label class="radio-inline"><input type="radio" name="material" value="RESINE_FLEX"> 🥽 Flexible</label>
+                            <label class="radio-inline"><input type="radio" name="material" value="RESINE_CLEAR"> 🔬 Translucide</label>
+                            <label class="radio-inline"><input type="radio" name="material" value="RESINE_CASTABLE"> 🔥 Calcinale</label>
+                        </div>
+
+                        <!-- QUANTITÉ -->
                         <div class="list-group-item">
                             <h4>📦 Quantité (kg)</h4>
-                            <input name="qty" id="qty" type="number" class="form-control" min="0.1" step="0.1" value="1">
+                            <input name="qty" id="qty" type="number" class="form-control" min="0.1" step="0.1" value="1" placeholder="1.0">
                         </div>
+
+                        <!-- COULEUR -->
                         <div class="list-group-item">
                             <h4>🎨 Couleur</h4>
-                            <label class="radio-inline"><input type="radio" name="color" value="Blanc"> Blanc</label>
-                            <label class="radio-inline"><input type="radio" name="color" value="Noir"> Noir</label>
-                            <label class="radio-inline"><input type="radio" name="color" value="Gris"> Gris</label>
+                            <label class="radio-inline"><input type="radio" name="color" value="Blanc"> ⚪ Blanc</label>
+                            <label class="radio-inline"><input type="radio" name="color" value="Noir"> ⚫ Noir</label>
+                            <label class="radio-inline"><input type="radio" name="color" value="Gris"> ⚙️ Gris</label>
+                            <label class="radio-inline"><input type="radio" name="color" value="Rouge"> 🔴 Rouge</label>
+                            <label class="radio-inline"><input type="radio" name="color" value="Bleu"> 🔵 Bleu</label>
                         </div>
+
+                        <!-- FINITION -->
                         <div class="list-group-item">
-                            <h4>🌊 Résine</h4>
-                            <label class="radio-inline"><input type="radio" name="resine" value="Standard"> Standard</label>
-                            <label class="radio-inline"><input type="radio" name="resine" value="Flexible"> Flexible</label>
-                            <label class="radio-inline"><input type="radio" name="resine" value="Clear"> Translucide</label>
+                            <h4>✨ Finition</h4>
+                            <label class="radio-inline"><input type="radio" name="finish" value="Brut"> ⚡ Brut de fonderie</label>
+                            <label class="radio-inline"><input type="radio" name="finish" value="Lisse"> 🧽 Ponçage fin</label>
+                            <label class="radio-inline"><input type="radio" name="finish" value="Peinture"> 🎨 Peinture</label>
                         </div>
+
+                        <!-- NOTE -->
                         <div class="list-group-item">
-                            <h4>📝 Note</h4>
-                            <textarea name="note" class="form-control" rows="3" maxlength="200"></textarea>
+                            <h4>📝 Demande spéciale</h4>
+                            <textarea name="note" class="form-control" rows="3" maxlength="200" placeholder="Délai urgent, finition mate, quantité importante..."></textarea>
                         </div>
-                        <div class="list-group-item list-group-item-info">
-                            <h4>📧 Email</h4>
-                            <input name="email" id="email" type="email" class="form-control" required placeholder="test@mail.com">
+
+                        <!-- EMAIL -->
+                        <div class="list-group-item list-group-item-warning">
+                            <h4>📧 <strong>Votre email</strong></h4>
+                            <input name="email" id="email" type="email" class="form-control" required placeholder="contact@client.com">
                         </div>
-                        <button id="submit" type="submit" class="btn btn-primary btn-block list-group-item">
-                            <h3>🚀 Obtenir un devis <span class="glyphicon glyphicon-cloud-download"></span></h3>
+
+                        <!-- BOUTON DEVIS -->
+                        <button id="submit" type="submit" class="btn btn-primary btn-lg btn-block list-group-item">
+                            <h3>🚀 <strong>OBTENIR DEVIS</strong> <span class="glyphicon glyphicon-cloud-download-alt pull-right"></span></h3>
+                            <p class="help-block">Réponse sous 24h - Lille</p>
                         </button>
                     </form>
+                </div>
+            </div>
+
+            <!-- INFOS COMMERCIALES -->
+            <div class="col-md-4">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h4>🏭 <strong>HB3D Lille</strong></h4>
+                    </div>
+                    <div class="panel-body">
+                        <p><strong>💰 Dès 0.1kg</strong></p>
+                        <p><strong>⚡ Délai 24-72h</strong></p>
+                        <p><strong>📏 Précision ±0.1mm</strong></p>
+                        <p><strong>🎯 FDM + SLA</strong></p>
+                        <hr>
+                        <p><em>hakim@hb3d.fr</em></p>
+                        <p><em>03.20.12.34.56</em></p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SCRIPTS (AVANT </body>) -->
+    <!-- ===== JAVASCRIPT LIBRAIRIES ===== -->
     <script src="js/jquery-1.11.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jsc3d_mod.js"></script>
@@ -102,40 +146,43 @@
     <script src="js/object_viewer.js"></script>
     <script src="js/upload_handler.js"></script>
 
-    <!-- 🔥 EMAILJS FORMULAIRE HB3D -->
+    <!-- ===== EMAILJS DEVIS HB3D 🔥 ===== -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
         emailjs.init("L3Sr6smhqooUMTq7D");
         
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 HB3D EmailJS chargé');
+            
             document.getElementById('form').addEventListener('submit', function(e) {
                 e.preventDefault();
-                console.log('🚀 Formulaire cliqué !');
+                console.log('🎯 Formulaire DEVIS cliqué !');
                 
+                // Collecte données
                 const formData = {
                     material: document.querySelector('input[name="material"]:checked')?.value || 'Non spécifié',
                     qty: document.getElementById('qty').value + ' kg',
                     color: document.querySelector('input[name="color"]:checked')?.value || 'Non spécifié',
-                    resine: document.querySelector('input[name="resine"]:checked')?.value || 'Non spécifié',
+                    finish: document.querySelector('input[name="finish"]:checked')?.value || 'Brut',
                     note: document.querySelector('textarea[name="note"]').value || '',
                     email: document.getElementById('email').value,
-                    from_name: 'HB3D Lille'
+                    from_name: 'Devis HB3D Lille'
                 };
                 
-                console.log('📧 Envoi EmailJS:', formData);
+                console.log('📧 Envoi EmailJS →', formData);
                 
+                // Envoi
                 emailjs.send('service_hv1zpbv', '88ulorc', formData)
                     .then(function(response) {
-                        console.log('✅ EMAILJS SUCCESS:', response);
-                        alert('✅ Devis envoyé ! Vérifie test@mail.com');
+                        console.log('✅ DEVIS ENVOYÉ !', response.status);
+                        alert('✅ Devis HB3D envoyé !\nRéponse 24h → hakim@hb3d.fr');
                         document.getElementById('form').reset();
                     }, function(error) {
                         console.error('❌ EMAILJS ERROR:', error);
-                        alert('❌ Erreur: ' + (error.text || JSON.stringify(error)));
+                        alert('❌ Erreur envoi:\n' + (error.text || 'Vérifiez Console F12'));
                     });
             });
         });
     </script>
 </body>
 </html>
-
