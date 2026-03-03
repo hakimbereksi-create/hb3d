@@ -141,13 +141,11 @@
     </div>
 
     <script>
+<script>
 function createGitHubIssue(){
-const e=document.querySelector('input[name="email"]').value;
-const q=document.querySelector('input[name="qty"]').value;
-const m=document.querySelector('input[name="material"]:checked')?.value||'';
-if(!e){alert('Email !');return;}
-fetch('https://api.github.com/repos/hakimbereksi-create/hb3d/issues',{method:'POST',headers:{'Authorization':'token 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','Content-Type':'application/json'},body:JSON.stringify({title:`🚀 HB3D ${m} ${q}`,body:`Email:${e}`})}).then(r=>r.json()).then(d=>alert('✅ '+d.html_url)).catch(()=>alert('401 Token'));
-document.querySelector('#devisBtn').onclick=createGitHubIssue;
+  const e=document.querySelector('input[name="email"]');
+  const q=document.querySelector
+
 </script>
     
 ```html
@@ -155,6 +153,7 @@ document.querySelector('#devisBtn').onclick=createGitHubIssue;
 
 </body>
 </html>
+
 
 
 
