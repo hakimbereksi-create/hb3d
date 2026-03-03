@@ -57,10 +57,11 @@ $(document).ready(function(){
             },
             error: function(jqXHR, textStatus, errorThrown)
             {
-                // Handle errors here
-                console.log('2.ERRORS: ' + errorThrown);
-                // STOP LOADING SPINNER
-                $("#loading").hide();
+         console.log('2.ERRORS détaillées:', errorThrown);
+console.log('Status:', xhr.status);
+$("#loading").hide();
+alert('Upload KO → Crée dossier uploads/ !');
+
             }
         });
     }
