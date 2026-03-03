@@ -147,37 +147,26 @@
     <script src="js/upload_handler.js"></script>
 
     <!-- ===== GITHUB API HB3D v2.0 🚀 ===== -->
- <script>
+<script>
 function createGitHubIssue(){
-const emailField=document.querySelector('input[name="email"]');
-const qtyField=document.querySelector('input[name="qty"]');
-if(!emailField||!emailField.value){
-alert('Email obligatoire !');return;}
-const material=document.querySelector('input[name="material"]:checked')?.value||'Non spécifié';
-const qty=qtyField?qtyField.value:'1';
-const email=emailField.value;
-console.log('HB3D v2.0 GitHub',material,qty,email);
+const e=document.querySelector('input[name="email"]');
+const q=document.querySelector('input[name="qty"]');
+if(!e||!e.value){alert('Email !');return;}
+const m=document.querySelector('input[name="material"]:checked')?.value||'';
+const qty=q?q.value:'1';
+console.log('HB3D',m,qty,e.value);
 fetch('https://api.github.com/repos/hakimbereksi-create/hb3d/issues',{
 method:'POST',
-headers:{
-'Authorization':'Bearer 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',
-'Content-Type':'application/json'},
-body:JSON.stringify({
-title:`DEVIs HB3D: ${material} - ${qty} unités`,
-body:`Client: ${email}\nMatériau: ${material}\nQuantité: ${qty} unités\n\nHB3D Lille v2.0`
-})
-}).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json()})
-.then(d=>{
-
-console.log('Issue creee:',d.html_url);
-alert('DEVIs HB3D ENVOYE !\n'+d.html_url);
-document.getElementById('form')?.reset();
-}).catch(e=>alert('Erreur: '+e));
+headers:{'Authorization':'token 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','Content-Type':'application/json'},
+body:JSON.stringify({title:`🚀 HB3D: ${m}-${qty}`,body:`Client:${e.value}\nMatériau:${m}\nUnités:${qty}`})
+}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(d=>{console.log(d.html_url);alert('✅ '+d.html_url);}).catch(console.error);
 }
 </script>
 
+
 </body>
 </html>
+
 
 
 
