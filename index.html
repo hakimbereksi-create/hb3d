@@ -147,25 +147,17 @@
     <script src="js/upload_handler.js"></script>
 
     <!-- ===== GITHUB API HB3D v2.0 🚀 ===== -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-function createGitHubIssue(){
-const e=document.querySelector('input[name="email"]');
-const q=document.querySelector('input[name="qty"]');
-if(!e||!e.value){alert('Email !');return;}
-const m=document.querySelector('input[name="material"]:checked')?.value||'';
-const qty=q?q.value:'1';
-console.log('HB3D',m,qty,e.value);
-fetch('https://api.github.com/repos/hakimbereksi-create/hb3d/issues',{
-method:'POST',
-headers:{'Authorization':'token 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','Content-Type':'application/json'},
-body:JSON.stringify({title:`🚀 HB3D: ${m}-${qty}`,body:`Client:${e.value}\nMatériau:${m}\nUnités:${qty}`})
-}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(d=>{console.log(d.html_url);alert('✅ '+d.html_url);}).catch(console.error);
-}
-</script>
+emailjs.init("L3Sr6smhqooUMTq7D");
+function sendHybridDevis(){
+const e=document.querySelector('
+
 
 
 </body>
 </html>
+
 
 
 
