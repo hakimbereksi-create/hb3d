@@ -148,57 +148,53 @@
 
     <!-- ===== GITHUB API HB3D v2.0 🚀 ===== -->
     <script>
-    function createGitHubIssue() {
-        // Validation
-        const email = document.getElementById('email').value;
-        if(!email) {
-            alert('❌ Email obligatoire !');
-            return;
-        }
-        
-        // Collecte données
-        const material = document.querySelector('input[name="material"]:checked')?.value || 'Non spécifié';
-        const qty = document.getElementById('qty').value || '1';
-        const color = document.querySelector('input[name="color"]:checked')?.value || 'Non spécifié';
-        const finish = document.querySelector('input[name="finish"]:checked')?.value || 'Brut';
-        const note = document.querySelector('textarea[name="note]').value || '';
-        
-        console.log('🚀 HB3D v2.0 → GitHub Issue');
-        
-        // Création Issue GitHub
-        fetch('https://api.github.com/repos/hakimbereksi-create/hb3d/issues', {
-            method: 'POST',
-            headers: {
-                'Authorization': 'token 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',
-                'Content-Type': 'application/json',
-                'Accept': 'application/vnd.github.v3+json'
-            },
-            body: JSON.stringify({
-                title: `🚀 DEVIs HB3D: ${material} - ${qty} unités`,
-                body: `👤 **Client**: ${email}\n` +
-                      `🖨️ **Matériau**: ${material}\n` +
-                      `🔢 **Quantité**: ${qty} unités\n` +
-                      `🎨 **Couleur**: ${color}\n` +
-                      `✨ **Finition**: ${finish}\n` +
-                      `📝 **Note**: ${note}\n\n` +
-                      `📍 **HB3D Lille** - Devis automatique v2.0\n` +
-                      `*03/03/2026 18h*`
-            })
-        })
-        .then(response => {
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            return response.json();
-        })
-        .then(data => {
-            console.log('✅ Issue créée:', data.html_url);
-            alert(`✅ DEVIs HB3D v2.0 ENVOYÉ !\n\n📋 Issue GitHub:\n${data.html_url}\n\n⚡ Zapier → Email + CRM automatique !`);
-            document.getElementById('form').reset();
-        })
-        .catch(error => {
-            console.error('❌ GitHub ERROR:', error);
-            alert('❌ Erreur GitHub:\n\n' + error + '\n\nF12 Console → Détails techniques');
-        });
+function createGitHubIssue() {
+    // Validation + collecte SÉCURISÉE
+    const emailField = document.querySelector('input[name="email"]');
+    const qtyField = document.querySelector('input[name="qty"]');
+    
+    if(!emailField || !emailField.value) {
+        alert('❌ Email obligatoire !');
+        return;
     }
-    </script>
+    
+    const material = document.querySelector('input[name="material"]:checked')?.value || 'Non spécifié';
+    const qty = qtyField ? qtyField.value : '1';
+    const color = document.querySelector('input[name="color"]:checked')?.value || 'Non spécifié';
+    const finish = document.querySelector('input[name="finish"]:checked')?.value || 'Brut';
+    const note = document.querySelector('textarea[name="note"]')?.value || '';
+    const email = emailField.value;
+    
+    console.log('🚀 HB3D v2.0 → GitHub Issue', {material, qty, email});
+    
+    fetch('https://api.github.com/repos/hakimbereksi-create/hb3d/issues', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'token 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',
+            'Content-Type': 'application/json',
+            'Accept': 'application/vnd.github.v3+json'
+        },
+        body: JSON.stringify({
+            title: `🚀 DEVIs HB3D: ${material} - ${qty} unités`,
+            body: `👤 **Client**: ${email}\n🖨️ **Matériau**: ${material}\n🔢 **Quantité**: ${qty} unités\n🎨 **Couleur**: ${color}\n✨ **Finition**: ${finish}\n📝 **Note**: ${note}\n\n📍 **HB3D Lille** - Devis v2.0 *03/03/2026*`
+        })
+    })
+    .then(response => {
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return response.json();
+    })
+    .then(data => {
+        console.log('✅ Issue créée:', data.html_url);
+        alert(`✅ DEVIs HB3D v2.0 ENVOYÉ !\n\n📋 ${data.html_url}\n\n⚡ Zapier CRM auto !`);
+        document.getElementById('form')?.reset();
+    })
+    .catch(error => {
+        console.error('❌ GitHub ERROR:', error);
+        alert('❌ Erreur GitHub:\n' + error);
+    });
+}
+</script>
+
 </body>
 </html>
+
