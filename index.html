@@ -1,161 +1,227 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en">
+<strong>HB3D analyse volume calculateur STL</strong>
 <head>
-    <meta charset="utf-8">
-    <title>HB3D STL Viewer - Impressions 3D Lille</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-    <div id="div" class="container">
-        <div class="row">
-            <!-- 3D VIEWER -->
-            <div class="col-md-4">
-                <div id="stlselector" class="bg-warning">
-                    <label for="file"><b>📁 Votre fichier STL:</b></label>
-                    <input type="file" name="file" id="file" accept=".stl"/>
-                </div>
-                <div id="view3d">
-                    <canvas id="cv" width="400" height="400"></canvas>
-                    <div class="panel panel-info" id="tip">
-                        <table class="table">
-                            <tr><td>🔍 Zoom</td><td><kbd>Wheel</kbd></td></tr>
-                            <tr><td>↻ Rotate</td><td><kbd>Drag</kbd></td></tr>
-                            <tr><td>⬅️ Pan</td><td><kbd>Ctrl+Drag</kbd></td></tr>
-                        </table>
+        <meta charset="utf-8">
+        <title>STL 3D Viewer</title>
+    </head>
+    <body>
+
+        <!-- Main div -->
+        <div id="div" class="container">
+
+            <div class="row">
+
+                <div class="col-md-4">
+
+                    <div id="stlselector" class="bg-warning">
+                    
+                        <label for="file"><b>Votre fichier STL:</b></label>
+                        <input type="file" name="file" id="file"/>
                     </div>
-                    <div id="loading">
-                        <img src="css/images/loading.gif" alt="Loading..."/>
+
+                    <div id="view3d">
+                        <!-- HTML5 Canvas -->
+                        <canvas id="cv" width="400" height="400"></canvas>
+
+                        <!-- Rotate and Zoom Tip -->
+                        <div class="panel panel-info" id="tip">
+                            <table class="table">
+                                <tr><td>
+                                    Zoom </td> <td><kbd>Wheel</kbd>
+                                    </td></tr>
+                                <tr><td>
+                                    Rotate </td> <td><kbd>Drag</kbd> 
+                                    </td></tr>
+                                <tr><td>
+                                    Pan </td> <td><kbd>Ctrl</kbd> + <kbd>Drag</kbd>
+                                    </td></tr>
+                            </table>
+                        </div>
+                        
+                        <div id="loading">
+                            <img src="css/images/loading.gif" alt="Turning the crank ..."/>
+                        </div>
+
                     </div>
+
+
+                    <!-- Render type selection menu -->
+                    <table class="table">
+                        <tr><td>
+                            <button class="btn btn-default btn-xs pull-left" id="info">
+                                <span class="glyphicon glyphicon-info-sign"></span> Interact
+                            </button>
+                            </td>
+                            <td>
+                                <div class="btn-group dropup pull-right">
+                                    <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-eye-open"></span> View <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#wireframe" class="rendermode">Wireframe</a></li>
+                                        <li><a href="#point" class="rendermode">Points</a></li>
+                                        <li><a href="#flat" class="rendermode">Filled</a></li>
+                                    </ul>
+                                </div>
+
+                            </td>
+                        </tr>
+                    </table>
+
                 </div>
-                <table class="table">
-                    <tr>
-                        <td><button class="btn btn-default btn-xs pull-left" id="info">
-                            <span class="glyphicon glyphicon-info-sign"></span> Interact
-                        </button></td>
-                        <td>
-                            <div class="btn-group dropup pull-right">
-                                <button class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                    <span class="glyphicon glyphicon-eye-open"></span> Vue <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#wireframe" class="rendermode">Wireframe</a></li>
-                                    <li><a href="#point" class="rendermode">Points</a></li>
-                                    <li><a href="#flat" class="rendermode">Filled</a></li>
-                                </ul>
+
+                <div class="col-md-4">
+                    <!-- Customizer -->
+                    <div class="list-group container-fluid">
+
+                        <form id="form" data-netlify="true" name="HB3D-Devis">
+
+         <!-- Material -->
+                            <div class="list-group-item">
+                                <h4 class="list-group-item-heading">Materiau Plastique ABS</h4>
+                                <label class="radio-inline">
+                                    <input type="radio" name="materialOptions" id="material1" value="ABS"> ABS
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="materialOptions" id="material2" value="PLA"> PLA
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="materialOptions" id="material3" value="NYLON"> NYLON
+                              </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="materialOptions" id="material3" value="PETG"> PETG
+                              </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="materialOptions" id="material4" value="Flex"> Flex
+                                </label>
                             </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+                            <!-- Color -->
+                          <div class="list-group-item">
+                                <h4 class="list-group-item-heading">Color</h4>
+                                 <label class="radio-inline">
+                                    <input type="radio" name="colorOptions" id="color1" value="WhiteD"> Blanc
+                                </label>
+                                 <label class="radio-inline">
+                                    <input type="radio" name="colorOptions" id="color2" value="Black"> Noir
+                                </label>
+                                 <label class="radio-inline">
+                                    <input type="radio" name="colorOptions" id="color3" value="Grey"> Gris
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="colorOptions" id="color4" value="RED"> Rouge
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="colorOptions" id="color5" value="GREEN"> vert
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="colorOptions" id="color6" value="BLUE"> 
+                                    Bleu
+                                </label>
+    </div>
+                                <!-- Material -->
+                            <div class="list-group-item">
+                            <h4 class="list-group-item-heading">Materiau Résine</h4>
+                                <label class="radio-inline">
+                                    <input type="radio" name="materialOptions" id="material4" value="Résine Standad"> Résine standard
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="materialOptions" id="material5" value="Flex"> Flexible 
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="materialOptions" id="material6" value="Clear"> Translucide
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="materialOptions" id="material7" value="Castable">Calcinable
+                                </label>
+           
+                            </div>
+                            <!-- Color -->
+                            <div class="list-group-item">
+                                <h4 class="list-group-item-heading">Color</h4>
+                                 <label class="radio-inline">
+                                    <input type="radio" name="colorOptions" id="color1" value="WhiteD"> Blanc
+                                </label>
+                                 <label class="radio-inline">
+                                    <input type="radio" name="colorOptions" id="color1" value="Black"> Noir
+                                </label>
+                                 <label class="radio-inline">
+                                    <input type="radio" name="colorOptions" id="color1" value="Grey"> Gris
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="colorOptions" id="color1" value="RED"> Rouge
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="colorOptions" id="color2" value="GREEN"> vert
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="colorOptions" id="color3" value="BLUE"> 
+                                    Bleu
+                                </label>
+                                
+                          
+                            </div>
+                            <!-- Quantity -->
+                            <div class="list-group-item">
+                                <h4 class="list-group-item-heading">Quantity</h4>
+                                <div class="input-group">
+                                    <input name="qty" type="number" class="form-control" min="1" placeholder="1">
+                                </div>
+                            </div>
+                            <!-- Note -->
+                            <div class="list-group-item">
+                                <h4 class="list-group-item-heading">Prcisez votre demande</h4>
+                                <div class="input-group">
+                                    <textarea name="note" form="form" class="form-control" rows="3" maxlength="200"></textarea>
+                                </div>
+                            </div>
+                                                     
+mail:</h4>
+                              <!-- Email -->
+<div class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">
+        <span class="glyphicon glyphicon-envelope"></span> 
+        Votre mail:
+    </h4>
+    <div class="input-group">
+        <input name="email" type="email" class="form-control" maxlength="100" placeholder="user@example.com">
+    </div>
+</div>
 
-            <!-- FORMULAIRE DEVIS HB3D v2.0 GITHUB -->
-            <div class="col-md-4">
-                <div class="list-group container-fluid">
-                    <form id="form">
-                        <!-- PLASTIQUE FDM -->
-                        <div class="list-group-item list-group-item-danger">
-                            <h4>🖨️ <strong>PLASTIQUE FDM</strong></h4>
-                            <label class="radio-inline"><input type="radio" name="material" value="ABS"> 🔴 ABS</label>
-                            <label class="radio-inline"><input type="radio" name="material" value="PLA"> 🟢 PLA</label>
-                            <label class="radio-inline"><input type="radio" name="material" value="PETG"> 🔵 PETG</label>
-                            <label class="radio-inline"><input type="radio" name="material" value="NYLON"> ⚫ NYLON</label>
-                            <label class="radio-inline"><input type="radio" name="material" value="FLEX"> 🟡 FLEX TPU</label>
-                        </div>
-
-                        <!-- SLA RÉSINE -->
-                        <div class="list-group-item list-group-item-success">
-                            <h4>🌊 <strong>RÉSINE SLA</strong></h4>
-                            <label class="radio-inline"><input type="radio" name="material" value="RESINE_STANDARD"> 💎 Standard</label>
-                            <label class="radio-inline"><input type="radio" name="material" value="RESINE_FLEX"> 🥽 Flexible</label>
-                            <label class="radio-inline"><input type="radio" name="material" value="RESINE_CLEAR"> 🔬 Translucide</label>
-                            <label class="radio-inline"><input type="radio" name="material" value="RESINE_CASTABLE"> 🔥 Calcinale</label>
-                        </div>
-
-                        <!-- QUANTITÉ UNITÉS -->
-                        <div class="list-group-item">
-                            <h4>📦 <strong>NOMBRE D'UNITÉS</strong></h4>
-                            <input name="qty" id="qty" type="number" class="form-control" min="1" value="5" placeholder="5 unités">
-                        </div>
-
-                        <!-- COULEUR -->
-                        <div class="list-group-item">
-                            <h4>🎨 Couleur</h4>
-                            <label class="radio-inline"><input type="radio" name="color" value="Blanc"> ⚪ Blanc</label>
-                            <label class="radio-inline"><input type="radio" name="color" value="Noir"> ⚫ Noir</label>
-                            <label class="radio-inline"><input type="radio" name="color" value="Gris"> ⚙️ Gris</label>
-                            <label class="radio-inline"><input type="radio" name="color" value="Rouge"> 🔴 Rouge</label>
-                            <label class="radio-inline"><input type="radio" name="color" value="Bleu"> 🔵 Bleu</label>
-                        </div>
-
-                        <!-- FINITION -->
-                        <div class="list-group-item">
-                            <h4>✨ Finition</h4>
-                            <label class="radio-inline"><input type="radio" name="finish" value="Brut"> ⚡ Brut de fonderie</label>
-                            <label class="radio-inline"><input type="radio" name="finish" value="Lisse"> 🧽 Ponçage fin</label>
-                            <label class="radio-inline"><input type="radio" name="finish" value="Peinture"> 🎨 Peinture</label>
-                        </div>
-
-                        <!-- NOTE -->
-                        <div class="list-group-item">
-                            <h4>📝 Demande spéciale</h4>
-                            <textarea name="note" class="form-control" rows="3" maxlength="200" placeholder="Délai urgent, finition mate, quantité importante..."></textarea>
-                        </div>
-
-                        <!-- EMAIL -->
-                        <div class="list-group-item list-group-item-warning">
-                            <h4>📧 <strong>Votre email</strong></h4>
-                            <input name="email" id="email" type="email" class="form-control" required placeholder="contact@client.com">
-                        </div>
-
-                        <!-- BOUTON GITHUB v2.0 🔥 -->
-                        <button type="button" class="btn btn-danger btn-lg btn-block list-group-item" id="devisBtn">
-<h3>🚀 <strong>OBTENIR DEVIs HB3D v2.0</strong></h3>
+<!--Submit-->
+<button id="submit" type="button" class="btn btn-primary btn-block list-group-item">
+    <h3>obtenir un devis <span class="glyphicon glyphicon-cloud-download pull-right"></span></h3>
 </button>
-                            <h3>🚀 <strong>OBTENIR DEVIs HB3D v2.0</strong></h3>
-                            <p class="help-block">→ GitHub Issue + Zapier CRM automatique !</p>
-                        </button>
-                    </form>
+
+</form>  
+
+
+                        </form>
+
+                    </div>
                 </div>
             </div>
 
-            <!-- INFOS COMMERCIALES -->
-            <div class="col-md-4">
-                <div class="panel panel-success">
-                    <div class="panel-heading">
-                        <h4>🏭 <strong>HB3D Lille</strong></h4>
-                    </div>
-                    <div class="panel-body">
-                        <p><strong>💰 Dès 1 unité</strong></p>
-                        <p><strong>⚡ Délai 24-72h</strong></p>
-                        <p><strong>📏 Précision ±0.1mm</strong></p>
-                        <p><strong>🎯 FDM + SLA</strong></p>
-                        <hr>
-                        <p><em>hakim@hb3d.fr</em></p>
-                        <p><em>03.20.12.34.56</em></p>
-<!-- JS LIBS -->
-<script src="
+        </div>
+        <!-- END Main div -->
 
-<script>
-function createGitHubIssue(){
-const e=document.querySelector('input[name="email"]').value;
-const q=document
 
-</script>
-    
-```html
-<button id="devis
+        <!-- 
+CSS and Javascript library definitions.
+-->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/style.css">
 
-</body>
+        <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/jsc3d_mod.js"></script>
+        <script type="text/javascript" src="js/jsc3d.console.js"></script>
+
+        <!-- JSC3D based code for 3D rendering -->
+        <script type="text/javascript" src="js/object_viewer.js"></script>
+        <!-- Upload handler -->
+        <script type="text/javascript" src="js/upload_handler.js"></script>
+
+    </body>
 </html>
-
-
-
-
-
-
-
-
-
-
