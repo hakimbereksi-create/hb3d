@@ -1,4 +1,4 @@
-  <!doctype html>
+<!doctype html>
 <html lang="fr">
 <head>
     <meta charset="utf-8">
@@ -50,12 +50,12 @@
                 </table>
             </div>
 
-            <!-- FORMULAIRE DEVIS HB3D COMPLET -->
+            <!-- FORMULAIRE DEVIS HB3D v2.0 GITHUB -->
             <div class="col-md-4">
                 <div class="list-group container-fluid">
                     <form id="form">
                         <!-- PLASTIQUE FDM -->
-                        <div class="list-group-item list-group-item-success">
+                        <div class="list-group-item list-group-item-danger">
                             <h4>🖨️ <strong>PLASTIQUE FDM</strong></h4>
                             <label class="radio-inline"><input type="radio" name="material" value="ABS"> 🔴 ABS</label>
                             <label class="radio-inline"><input type="radio" name="material" value="PLA"> 🟢 PLA</label>
@@ -65,7 +65,7 @@
                         </div>
 
                         <!-- SLA RÉSINE -->
-                        <div class="list-group-item list-group-item-info">
+                        <div class="list-group-item list-group-item-success">
                             <h4>🌊 <strong>RÉSINE SLA</strong></h4>
                             <label class="radio-inline"><input type="radio" name="material" value="RESINE_STANDARD"> 💎 Standard</label>
                             <label class="radio-inline"><input type="radio" name="material" value="RESINE_FLEX"> 🥽 Flexible</label>
@@ -73,10 +73,10 @@
                             <label class="radio-inline"><input type="radio" name="material" value="RESINE_CASTABLE"> 🔥 Calcinale</label>
                         </div>
 
-                        <!-- QUANTITÉ -->
+                        <!-- QUANTITÉ UNITÉS -->
                         <div class="list-group-item">
-                            <h4>📦 Quantité (kg)</h4>
-                            <input name="qty" id="qty" type="number" class="form-control" min="0.1" step="0.1" value="1" placeholder="1.0">
+                            <h4>📦 <strong>NOMBRE D'UNITÉS</strong></h4>
+                            <input name="qty" id="qty" type="number" class="form-control" min="1" value="5" placeholder="5 unités">
                         </div>
 
                         <!-- COULEUR -->
@@ -109,10 +109,10 @@
                             <input name="email" id="email" type="email" class="form-control" required placeholder="contact@client.com">
                         </div>
 
-                        <!-- BOUTON DEVIS -->
-                        <button id="submit" type="submit" class="btn btn-primary btn-lg btn-block list-group-item">
-                            <h3>🚀 <strong>OBTENIR DEVIS</strong> <span class="glyphicon glyphicon-cloud-download-alt pull-right"></span></h3>
-                            <p class="help-block">Réponse sous 24h - Lille</p>
+                        <!-- BOUTON GITHUB v2.0 🔥 -->
+                        <button type="button" class="btn btn-danger btn-lg btn-block list-group-item" onclick="createGitHubIssue()">
+                            <h3>🚀 <strong>OBTENIR DEVIs HB3D v2.0</strong></h3>
+                            <p class="help-block">→ GitHub Issue + Zapier CRM automatique !</p>
                         </button>
                     </form>
                 </div>
@@ -125,7 +125,7 @@
                         <h4>🏭 <strong>HB3D Lille</strong></h4>
                     </div>
                     <div class="panel-body">
-                        <p><strong>💰 Dès 0.1kg</strong></p>
+                        <p><strong>💰 Dès 1 unité</strong></p>
                         <p><strong>⚡ Délai 24-72h</strong></p>
                         <p><strong>📏 Précision ±0.1mm</strong></p>
                         <p><strong>🎯 FDM + SLA</strong></p>
@@ -146,45 +146,59 @@
     <script src="js/object_viewer.js"></script>
     <script src="js/upload_handler.js"></script>
 
-    <!-- ===== EMAILJS DEVIS HB3D 🔥 ===== -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <!-- ===== GITHUB API HB3D v2.0 🚀 ===== -->
     <script>
-        emailjs.init("L3Sr6smhqooUMTq7D");
+    function createGitHubIssue() {
+        // Validation
+        const email = document.getElementById('email').value;
+        if(!email) {
+            alert('❌ Email obligatoire !');
+            return;
+        }
         
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 HB3D EmailJS chargé');
-            
-            document.getElementById('form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                console.log('🎯 Formulaire DEVIS cliqué !');
-                
-                // Collecte données
-                const formData = {
-                    material: document.querySelector('input[name="material"]:checked')?.value || 'Non spécifié',
-                    qty: document.getElementById('qty').value + ' kg',
-                    color: document.querySelector('input[name="color"]:checked')?.value || 'Non spécifié',
-                    finish: document.querySelector('input[name="finish"]:checked')?.value || 'Brut',
-                    note: document.querySelector('textarea[name="note"]').value || '',
-                    email: document.getElementById('email').value,
-                    from_name: 'Devis HB3D Lille'
-                };
-                
-                console.log('📧 Envoi EmailJS →', formData);
-                
-                // Envoi
-                emailjs.send('service_hv1zpbv', '88ulorc', formData)
-                    .then(function(response) {
-                        console.log('✅ DEVIS ENVOYÉ !', response.status);
-                        alert('✅ Devis HB3D envoyé !\nRéponse 24h → hakim@hb3d.fr');
-                        document.getElementById('form').reset();
-                    }, function(error) {
-                        console.error('❌ EMAILJS ERROR:', error);
-                        alert('❌ Erreur envoi:\n' + (error.text || 'Vérifiez Console F12'));
-                    });
-            });
+        // Collecte données
+        const material = document.querySelector('input[name="material"]:checked')?.value || 'Non spécifié';
+        const qty = document.getElementById('qty').value || '1';
+        const color = document.querySelector('input[name="color"]:checked')?.value || 'Non spécifié';
+        const finish = document.querySelector('input[name="finish"]:checked')?.value || 'Brut';
+        const note = document.querySelector('textarea[name="note]').value || '';
+        
+        console.log('🚀 HB3D v2.0 → GitHub Issue');
+        
+        // Création Issue GitHub
+        fetch('https://api.github.com/repos/hakimbereksi-create/hb3d/issues', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'token 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',
+                'Content-Type': 'application/json',
+                'Accept': 'application/vnd.github.v3+json'
+            },
+            body: JSON.stringify({
+                title: `🚀 DEVIs HB3D: ${material} - ${qty} unités`,
+                body: `👤 **Client**: ${email}\n` +
+                      `🖨️ **Matériau**: ${material}\n` +
+                      `🔢 **Quantité**: ${qty} unités\n` +
+                      `🎨 **Couleur**: ${color}\n` +
+                      `✨ **Finition**: ${finish}\n` +
+                      `📝 **Note**: ${note}\n\n` +
+                      `📍 **HB3D Lille** - Devis automatique v2.0\n` +
+                      `*03/03/2026 18h*`
+            })
+        })
+        .then(response => {
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return response.json();
+        })
+        .then(data => {
+            console.log('✅ Issue créée:', data.html_url);
+            alert(`✅ DEVIs HB3D v2.0 ENVOYÉ !\n\n📋 Issue GitHub:\n${data.html_url}\n\n⚡ Zapier → Email + CRM automatique !`);
+            document.getElementById('form').reset();
+        })
+        .catch(error => {
+            console.error('❌ GitHub ERROR:', error);
+            alert('❌ Erreur GitHub:\n\n' + error + '\n\nF12 Console → Détails techniques');
         });
+    }
     </script>
 </body>
 </html>
-
-
