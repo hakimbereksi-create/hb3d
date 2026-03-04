@@ -15,14 +15,20 @@ $(document).ready(function(){
 
     $('#submit').on('click', uploadFiles);
 
-    // Catch the form submit and upload the files
-    function uploadFiles(event)
-    {
-        event.stopPropagation();
-        event.preventDefault();
-        $("#loading").show();
-
-        var data = new FormData();
+function uploadFiles(event)
+{
+    event.stopPropagation();
+    event.preventDefault();
+    
+    // FIX : Vérifie files existe
+    if (!files || files.length === 0) {
+        alert('❌ Aucun fichier STL chargé !');
+        $("#loading").hide();
+        return;
+    }
+    
+    $("#loading").show();
+    var data = new FormData();
         $.each(files, function(key, value){
             data.append(key, value);
             console.log(value);
